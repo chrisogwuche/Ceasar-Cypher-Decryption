@@ -14,51 +14,43 @@ public class App {
         int key = Integer.parseInt(sc.nextLine());
 
         String encryptMessage = "";
-        arrWord = Arrays.asList(Message.split(" ")); // split word into an array
-        
-        for(String x: arrWord){
-            String word_in_arrWord = x;
-            List<String> wordInArray = Arrays.asList(word_in_arrWord.split(""));
-            String xEncrypt = "";
+        arrWord = Arrays.asList(Message.split("")); // split word into an array
 
-            for(String a : wordInArray){
-                // check if it is String "a" is a Capital letter
-                boolean UpperCase = false;
-                if(a.toLowerCase()!= a){
-                    UpperCase = true;
-                }
-                // check if "a" is a special character and then add to indexDecrypt
-                if(a.matches("[^a-zA-Z]+")){
-                    xEncrypt += a.toString();
-                }
-                // loop through to know where String "a" matches with Aphabet
-                for(int i = 0; i < Alphabet_to_Set_Encryption.length; i++){
+        for(String a : arrWord){
+            // check if it is String "a" is a Capital letter
+            boolean UpperCase = false;
+            if(a.toLowerCase()!= a){
+                UpperCase = true;
+            }
+            // check if "a" is a special character and then add to indexDecrypt
+            if(a.matches("[^a-zA-Z]+")){
+                encryptMessage += a.toString();
+            }
+            if(Alphabet_to_Set_Encryption.contains(a.toLowerCase())){
+                int i = Alphabet_to_Set_Encryption.indexOf(a);
+                int position = i - key;
 
-                    if(a.toLowerCase().equals(Alphabet_to_Set_Encryption[i])){
-                        int position = i - key;
-                        if(position < 0 ){
-                            int count2 = Alphabet_to_Set_Encryption.length - Math.abs(position);
-                            if(UpperCase == true){
-                                xEncrypt += Alphabet_to_Set_Encryption[count2].toUpperCase() ; 
-                            }
-                            else{
-                                xEncrypt += Alphabet_to_Set_Encryption[count2] ; 
-                            }
-                        }
-                        else {
-                            if(UpperCase == true){
-                                xEncrypt += Alphabet_to_Set_Encryption[position].toUpperCase() ; 
-                            }
-                            else{
-                                xEncrypt += Alphabet_to_Set_Encryption[position];
-                            }
-                        }
+                if(position < 0 )
+                {
+                    int shift = Alphabet_to_Set_Encryption.size() - Math.abs(position);
+                    if(UpperCase == true){
+                        encryptMessage += Alphabet_to_Set_Encryption.get(shift).toUpperCase() ; 
+                    }
+                    else{
+                        encryptMessage += Alphabet_to_Set_Encryption.get(shift); 
+                    }
+                }
+                else {
+                    if(UpperCase == true){
+                        encryptMessage += Alphabet_to_Set_Encryption.get(position).toUpperCase() ; 
+                    }
+                    else{
+                        encryptMessage += Alphabet_to_Set_Encryption.get(position);
                     }
                 }
             }
-            encryptMessage += xEncrypt + " ";
         }
-        System.out.println("-----ENCRYPTED MESSAGE----\n" + encryptMessage +"\n\n");
+        System.out.println("-----ENCRYPTED MESSAGE----\n" +encryptMessage +"\n\n");
          
        
 
@@ -67,53 +59,43 @@ public class App {
         System.out.println("ENTER KEY TO DECRYPT: ");
         int Decrypt_key = Integer.parseInt(sc.nextLine());
 
-        // String encrypted_Message = "Ocz Wzvpodapg Bdmg.";
         String decrypted_Message = "";
-        arrWord_Decrypt = Arrays.asList(encryptMessage.split(" ")); // split word into an array
+        arrWord_Decrypt = Arrays.asList(encryptMessage.split("")); // split word into an array
 
-        for(String x: arrWord_Decrypt){
-            String word_in_arrWord = x;
-            List<String> wordInArray = Arrays.asList(word_in_arrWord.split(""));
-            String xDecrypt = "";
+        for(String a : arrWord_Decrypt){
+            // check if it is String "a" is a Capital letter
+            boolean UpperCase = false;
+            if(a.toLowerCase()!= a){
+                UpperCase = true;
+            }
+            // check if "a" is a special character and then add to indexDecrypt
+            if(a.matches("[^a-zA-Z]+")){
+                decrypted_Message += a.toString();
+            }
+            if(Alphabet_to_Set_Decryption.contains(a.toLowerCase())){
+                int i = Alphabet_to_Set_Decryption.indexOf(a);
+                int position = i + Decrypt_key;
 
-            for(String a : wordInArray){
-                // check if it is String "a" is a Capital letter
-                boolean UpperCase = false;
-                if(a.toLowerCase()!= a){
-                    UpperCase = true;
+                if(position > 26 ){
+                    int shift = position - (Alphabet_to_Set_Decryption.size()-1);
+                    if(UpperCase == true){
+                        decrypted_Message += Alphabet_to_Set_Decryption.get(shift).toUpperCase() ; 
+                    }
+                    else{
+                        decrypted_Message += Alphabet_to_Set_Decryption.get(shift); 
+                    }
                 }
-                // check if "a" is a special character and then add to indexDecrypt
-                if(a.matches("[^a-zA-Z]+")){
-                    xDecrypt += a.toString();
-                }
-                // loop through to know where String "a" matches with Aphabet
-                for(int i = 0; i < Alphabet_to_Set_Decryption.length; i++){
-
-                    if(a.toLowerCase().equals(Alphabet_to_Set_Decryption[i])){
-                        int position = i + Decrypt_key;
-                        if(position > 26 ){
-                            int count2 = position - (Alphabet_to_Set_Decryption.length-1);
-                            if(UpperCase == true){
-                                xDecrypt += Alphabet_to_Set_Decryption[count2].toUpperCase() ; 
-                            }
-                            else{
-                                xDecrypt += Alphabet_to_Set_Decryption[count2] ; 
-                            }
-                        }
-                        else {
-                            if(UpperCase == true){
-                                xDecrypt += Alphabet_to_Set_Decryption[position].toUpperCase() ; 
-                            }
-                            else{
-                                xDecrypt += Alphabet_to_Set_Decryption[position];
-                            }
-                            
-                        }
+                else {
+                    if(UpperCase == true){
+                        decrypted_Message += Alphabet_to_Set_Decryption.get(position).toUpperCase() ; 
+                    }
+                    else{
+                        decrypted_Message += Alphabet_to_Set_Decryption.get(position);
                     }
                 }
             }
-            decrypted_Message += xDecrypt + " ";
         }
+
         System.out.println("-----MESSAGE----\n" + decrypted_Message);
         sc.close();
     }
